@@ -23,8 +23,6 @@ emotion_labels = ['angry', 'calm', 'disgust', 'fearful', 'happy', 'neutral', 'sa
 # Feature extraction: MFCC + Chroma + Mel
 def extract_feature(file_path, n_mfcc=40, n_mels=128):
     y, sr = librosa.load(file_path, sr=None)
-
-    # Resample to 16kHz
     if sr != 16000:
         y = librosa.resample(y, orig_sr=sr, target_sr=16000)
         sr = 16000
@@ -47,39 +45,49 @@ def predict_emotion(audio_path):
 # ---------------------------
 st.set_page_config(page_title="🎧 XGBoost Emotion Classifier", layout="centered")
 
-# Custom styles
+# Custom styling
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
 
     html, body, [class*="css"] {
-        font-family: 'Roboto Slab', serif;
-        background-color: #f9f9f9;
+        font-family: 'Quicksand', sans-serif;
+        background-color: #fdf6f0;
+        color: #2e2e2e;
     }
 
     h1 {
-        color: #3f51b5;
-        font-size: 40px;
-        margin-bottom: 10px;
+        color: #ff6f61;
+        font-size: 42px;
+        margin-bottom: 0.2em;
     }
 
     .stMarkdown p {
         font-size: 18px;
+        color: #444;
     }
 
     .stButton > button {
-        background-color: #3f51b5;
+        background-color: #ff6f61;
         color: white;
-        border: none;
         font-weight: bold;
-        padding: 0.5em 1.2em;
-        border-radius: 6px;
+        padding: 0.6em 1.4em;
+        border-radius: 8px;
+        border: none;
+    }
+
+    .stButton > button:hover {
+        background-color: #e85b50;
     }
 
     .stSuccess {
-        font-size: 24px;
-        font-weight: bold;
-        color: green;
+        font-size: 22px;
+        font-weight: 600;
+        color: #00897b;
+    }
+
+    .stSpinner > div {
+        color: #ff6f61;
     }
 
     </style>
